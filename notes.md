@@ -1,5 +1,7 @@
 # Project progress
 
+`category icons?, change chart layout/size `
+
 1. client : create react app here 
 2. server: init js project, install express 
 3. server: create express instance, check if server is listening at PORT
@@ -12,4 +14,5 @@
 10. server: fetch data transactions data from MongoDB
 11. server: create express routes for transactions API
 12. server: create database: move mongo connection here
-13. client: install material UI
+13. client: install material UI for styling , add fonts to index.html, copy components from Material ui
+14. 

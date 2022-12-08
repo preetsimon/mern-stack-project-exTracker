@@ -7,12 +7,9 @@ import passportConfig from "./config/passport.js";
 import connect from "./database/mongdb.js";
 import routes from "./routes/index.js";
 
-
- 
-
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,5 +24,5 @@ app.use("/", routes);
 await connect();
 
 app.listen(PORT, () => {
-  console.log("Server is running at http://localhost:4000");
+  console.log("Server is running at http://localhost:5000");
 });

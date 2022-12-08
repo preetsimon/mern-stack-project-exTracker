@@ -5,6 +5,8 @@ import TransactionChart from "../components/TransactionChart";
 import TransactionForm from "../components/TransactionForm";
 import TransactionsList from "../components/TransactionsList";
 
+
+
 export default function Home() {
   const [transactions, setTransactions] = useState([]);
   const [editTransaction, setEditTransaction] = useState({});
@@ -13,16 +15,20 @@ export default function Home() {
     fetchTransctions();
   }, []);
 
+
+
   async function fetchTransctions() {
-    // get transaction data from mongoDB. notice no methid is mentioned: default GET is applied
     const token = Cookies.get("token");
     const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    const { data } = await res.json();
+    const {data} = await res.json();
+    // console.log(await res.data.json())
+    
     setTransactions(data);
+    console.log(data)
   }
 
   return (

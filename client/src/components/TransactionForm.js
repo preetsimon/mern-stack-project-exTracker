@@ -11,7 +11,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
+import Category from "../pages/Category";
+import {mycategories} from "../pages/Category.js";
 const InitialForm = {
   amount: 0,
   description: "",
@@ -20,13 +21,37 @@ const InitialForm = {
   type: "expenses",
 };
 
+let categories = [{
+  
+    "label": "clothes",
+    "icon": "User",
+    "_id": "638fe6372f4236e5a6677c67"
+
+}]
 export default function TransactionForm({ fetchTransctions, editTransaction }) {
-  const { categories } = useSelector((state) => state.auth.user);
+  // const { categories } =useSelector((state) => state.auth.user)
+  const data  =useSelector((state) => state.auth.user)
+ 
+  if (typeof(data) != "undefined"){
+     categories = data.categories
+    console.log(categories);
+  } else {
+      categories = [
+        {
+          "label": "clothes",
+          "icon": "User",
+          "_id": "638fe6372f4236e5a6677c67"
+      }
+      ]
+  }
+
+  
+
   const token = Cookies.get("token");
   const [form, setForm] = useState(InitialForm);
   const types = ["expense", "income", "transfer"];
 
-  useEffect(() => {
+  useEffect( () => {
     if (editTransaction.amount !== undefined) {
       setForm(editTransaction);
     }
@@ -52,12 +77,12 @@ export default function TransactionForm({ fetchTransctions, editTransaction }) {
     }
   }
 
-  async function create() { // send form to backend: localhost 4000
+  async function create() {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
       method: "POST",
-      body: JSON.stringify(form), 
+      body: JSON.stringify(form),
       headers: {
-        "content-type": "application/json", // add header to send JSON object instead of string/text  
+        "content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -135,7 +160,7 @@ export default function TransactionForm({ fetchTransctions, editTransaction }) {
             />
           </LocalizationProvider>
 
-          <Autocomplete
+           { <Autocomplete
             value={getCategoryNameById()}
             onChange={(event, newValue) => {
               setForm({ ...form, category_id: newValue._id });
@@ -146,16 +171,16 @@ export default function TransactionForm({ fetchTransctions, editTransaction }) {
             renderInput={(params) => (
               <TextField {...params} size="small" label="Category" />
             )}
-          />
+          /> } 
 
           {editTransaction.amount !== undefined && (
-            <Button type="submit" variant="secondary">
+            <Button type="submit" variant="secondary" sx ={{bgcolor: "#d000ff"}}>
               Update
             </Button>
           )}
 
           {editTransaction.amount === undefined && (
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" sx ={{bgcolor: "#d000ff"}}>
               Submit
             </Button>
           )}
